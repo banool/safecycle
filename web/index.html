@@ -82,7 +82,7 @@
 								<header>
 									<h2>Get there safe</h2>
 								</header>
-								<form method="post" action="../scripts/test.py">
+								<form method="post" id="submimtLocations" action="../scripts/test.py">
 									<div class="row 50%">
 										<div class="6u 12u(mobile)">
 											<input name="origin" placeholder="Origin" type="text" class="text" />
@@ -93,21 +93,40 @@
 									</div>
 									<div class="row 50%">
 										<div class="12u">
-											<a href="#" class="button">Navigate</a>
+											<input class="button" type="submit" value="Navigate">
 										</div>
 									</div>
 
+									<script>
+									/* This script here enables the ajax response. Whatever is returned will
+									appear at the id tag specified after target. */
+									// prepare the form when the DOM is ready
+									$(document).ready(function() {
+										// bind form using ajaxForm
+										$('#submitLocations').ajaxForm({
+										    // target identifies the element(s) to update with the server response
+										    target: '#replaceTarget',
+
+										    // success identifies the function to invoke when the server response
+										    // has been received; here we apply a fade-in effect to the new content
+										    success: function() {
+										        $('#replaceTarget').fadeIn('slow');
+										        //$('#entryForm').each(function() {
+										            //this.reset();
+										        //});
+										    }
+										});
+									});
+									</script>
+
 									<!-- Google Maps part -->
-									<div class="row">
+									<div class="row" id="replaceTarget">
 										<iframe
 										  width="100%"
 										  height="750"
 										  frameborder="0" style="border:0"
-										  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
-										    &origin=8+first+court+preston,3072
-										    &destination=NGV
-										    &waypoints=Museum+of+Melbourne
-										    &mode=bicycling" allowfullscreen>
+										  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
+										    &q=University+of+Melbourne" allowfullscreen>
 										</iframe>
 									</div>
 								</form>
