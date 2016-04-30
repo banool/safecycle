@@ -81,7 +81,7 @@ def getAzureData(origin, destination):
 	                "input1":
 	                {
 	                    "ColumnNames": ["long", "lat", "time", "event"],
-	                    "Values": [ [ "0", "0", "0", "0" ], [ "0", "0", "0", "0" ], ]
+	                    "Values": [ [ "149.114", "-35.213", "9", "0" ], [ "0", "0", "0", "0" ], ]
 	                },        },
 	            "GlobalParameters": {
 	}
