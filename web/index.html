@@ -73,6 +73,22 @@
 								<h2>Ride Safely</h2>
 								<span class="byline">Get to where you want to go by the safest route, fast.</span>
 							</header>
+							      <script>
+							      $(function() {
+							        $('a[href*="#"]:not([href="#"])').click(function() {
+							          if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+							            var target = $(this.hash);
+							            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+							            if (target.length) {
+							              $('html, body').animate({
+							                scrollTop: target.offset().top
+							              }, 1000);
+							              return false;
+							            }
+							          }
+							        });
+							      });
+							      </script>
 							<a href="#footer" class="button big style1">Check it out</a>
 						</section>
 					</div>
