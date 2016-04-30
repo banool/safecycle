@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
 import urllib2
-import json 
+import json
+import googlemaps
 from urllib import quote
-#import numpy as np
 
 import cgitb, cgi
 cgitb.enable()
@@ -20,6 +20,7 @@ def entryPoint():
     form = cgi.FieldStorage()
 
     origin = form["origin"].value
+    print(getCoords(origin))
     destination = form["destination"].value
     waypoints = ["-35.308022,149.124349"]
 
@@ -45,6 +46,10 @@ def entryPoint():
 
     #diag
     #print(form)
+
+def getCoords(address):
+	mapService = GoogleMaps()
+	return mapService.geocode(address)
 
 
 def compileMapsRequest(origin, destination, waypoints):
