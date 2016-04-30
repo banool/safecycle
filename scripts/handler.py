@@ -23,6 +23,8 @@ def entryPoint():
 
     origin = form["origin"].value
     destination = form["destination"].value
+    #origin = "ANU, Canberra"
+    #destination = "parliament house, canberra"
 
     originCoords = getCoords(origin, gmaps)
     destinationCoords = getCoords(destination, gmaps)
@@ -33,7 +35,9 @@ def entryPoint():
 
     probs = []
     for point in testPoints:
-    	probs.append((point, float(getAzureProbability(point[0], point[1]))))
+    	res = float(getAzureProbability(point[0], point[1]))
+    	probs.append((point, res))
+    	print(res)
     	#probs.append(float(getAzureProbability(point[0], point[1])))
 
     # Get 8 lowest waypoints.
@@ -45,7 +49,8 @@ def entryPoint():
     print(stringWaypoints)
     #print(stringWaypoints)
     compileMapsRequest(origin, destination, stringWaypoints)
-	print(stringWaypoints)
+    print(stringWaypoints)
+
     """
     #lats = np.arange(-35.21, -35.27, 0.01)
     #longs = np.arange(149.114, 149.17, 0.01)
