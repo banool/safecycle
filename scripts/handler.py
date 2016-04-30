@@ -19,8 +19,8 @@ def entryPoint():
 
     form = cgi.FieldStorage()
 
-    #origin = form["origin"].value
-    #destination = form["destination"].value
+    origin = form["origin"].value
+    destination = form["destination"].value
     waypoints = ["-35.308022,149.124349"]
 
     compileMapsRequest(origin, destination, waypoints)
