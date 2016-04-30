@@ -21,10 +21,10 @@ def entryPoint():
 
     gmaps = googlemaps.Client(apiKey)
 
-    origin = form["origin"].value
-    destination = form["destination"].value
-    #origin = "ANU, Canberra"
-    #destination = "parliament house, canberra"
+    #origin = form["origin"].value
+    #destination = form["destination"].value
+    origin = "ANU, Canberra"
+    destination = "parliament house, canberra"
 
     originCoords = getCoords(origin, gmaps)
     destinationCoords = getCoords(destination, gmaps)
@@ -41,8 +41,8 @@ def entryPoint():
     	#probs.append(float(getAzureProbability(point[0], point[1])))
 
     # Get 8 lowest waypoints.
-    waypoints = []
-    stringWaypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
+    #waypoints = []
+    waypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
 
     """
     for i in range(0, len(probs)/3):
@@ -52,9 +52,9 @@ def entryPoint():
 
     #waypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
     
-    #stringWaypoints = []
-    #for i in waypoints:
-    #	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
+    stringWaypoints = []
+    for i in waypoints:
+    	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
 
     #print(stringWaypoints)
     compileMapsRequest(origin, destination, stringWaypoints)
