@@ -19,15 +19,15 @@ def entryPoint():
 
     form = cgi.FieldStorage()
 
-    origin = form["origin"].value
-    destination = form["destination"].value
-    waypoints = []
+    #origin = form["origin"].value
+    #destination = form["destination"].value
+    waypoints = ["-35.308022,149.124349"]
 
-    #compileMapsRequest(origin, destination, waypoints)
+    compileMapsRequest(origin, destination, waypoints)
 
     #lats = np.arange(-35.21, -35.27, 0.01)
     #longs = np.arange(149.114, 149.17, 0.01)
-
+    """
     latitude = -35.21
     longitude = 149.114
 
@@ -39,8 +39,8 @@ def entryPoint():
 
     for i in lats:
     	for j in longs:
-    		getAzureData(i, j)
-
+    		print(getAzureData(i, j))
+    """
     
 
     #diag
@@ -123,7 +123,7 @@ def getAzureData(latitude, longitude):
 	    # response = urllib.request.urlopen(req)
 
 	    result = response.read()
-	    print(result) 
+	    print("Long: %s Lat: %s Prob: %s" % (str(longitude), str(latitude), json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1]))
 	except urllib2.HTTPError, error:
 	    print("The request failed with status code: " + str(error.code))
 
