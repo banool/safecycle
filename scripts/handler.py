@@ -67,7 +67,7 @@ def pathFinder(A,B):
     if len(A)!=2 or len(B)!=2:
         return -1
 
-    buf = 0.0001
+    buf = 0.00001
     xmin = min(A[0],B[0]) - buf
     ymin = min(A[1],B[1]) - buf
     xmax = max(A[0],B[0]) + buf
