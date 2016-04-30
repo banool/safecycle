@@ -3,6 +3,8 @@
 import urllib2
 import json 
 from urllib import quote
+import numpy as np
+
 import cgitb, cgi
 cgitb.enable()
 
@@ -22,7 +24,15 @@ def entryPoint():
     waypoints = []
 
     #compileMapsRequest(origin, destination, waypoints)
-    getAzureData(origin, destination)
+
+    lats = np.arange(-35.21, -35.27, 0.01)
+    longs = np.arange(149.114, 149.17, 0.01)
+
+    for i in lats:
+    	for j i longs:
+    		getAzureData(i, j)
+
+    
 
     #diag
     #print(form)
@@ -72,7 +82,8 @@ def compileMapsRequest(origin, destination, waypoints):
 	print finalString
 
 
-def getAzureData(origin, destination):
+def getAzureData(latitude, longitude):
+
 
 	data =  {
 
@@ -81,7 +92,7 @@ def getAzureData(origin, destination):
 	                "input1":
 	                {
 	                    "ColumnNames": ["long", "lat", "time", "event"],
-	                    "Values": [ [ "149.114", "-35.213", "9", "0" ], [ "0", "0", "0", "0" ], ]
+	                    "Values": [ [ latitude, longitude, "9", "0" ], [ "0", "0", "0", "0" ], ]
 	                },        },
 	            "GlobalParameters": {
 	}
