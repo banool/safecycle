@@ -11,7 +11,7 @@ cgitb.enable()
 print("Content-Type: text/html\n")
 
 apiKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
-numWaypoints = 8
+numWaypoints = 2
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
