@@ -33,7 +33,7 @@ def compileMapsRequest(origin, destination, waypoints):
 				<div class="row">
 					<iframe
 					  width="1215"
-					  height="750"
+					  height="675"
 					  frameborder="0" style="border:0"
 					  src='
 			"""
