@@ -20,10 +20,8 @@ def entryPoint():
 
     gmaps = googlemaps.Client(apiKey)
 
-    #origin = form["origin"].value
-    #destination = form["destination"].value
-    origin = "ANU,Canberra,Australia"
-    destination = "Parliament House,Canberra,Australia"
+    origin = form["origin"].value
+    destination = form["destination"].value
 
     originCoords = getCoords(origin, gmaps)
     destinationCoords = getCoords(destination, gmaps)
