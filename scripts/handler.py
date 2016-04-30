@@ -19,8 +19,10 @@ def entryPoint():
 
     form = cgi.FieldStorage()
 
+    gmaps = googlemaps.Client(apiKey)
+
     origin = form["origin"].value
-    print(getCoords(origin))
+    print (getCoords(origin, gmaps))
     destination = form["destination"].value
     waypoints = ["-35.308022,149.124349"]
 
@@ -47,9 +49,9 @@ def entryPoint():
     #diag
     #print(form)
 
-def getCoords(address):
-	mapService = GoogleMaps()
-	return mapService.geocode(address)
+def getCoords(address, gmaps):
+	
+	return gmaps.geocode(address)
 
 
 def compileMapsRequest(origin, destination, waypoints):
