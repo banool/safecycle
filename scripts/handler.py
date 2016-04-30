@@ -31,20 +31,20 @@ def compileMapsRequest(origin, destination, waypoints):
 					  width="1215"
 					  height="750"
 					  frameborder="0" style="border:0"
-					  src="
+					  src='
 			"""
 
 	urlTarget = "https://www.google.com/maps/embed/v1/directions?key="
 	key = apiKey
 
 	end = """
-						 allowfullscreen>
+						&mode=bicycling' allowfullscreen>
 					</iframe>
 				</div>
 			"""
 
 	if len(waypoints) == 0:
-		request = "&origin=" + quote(origin) + "&destination=" + quote(destination) + "&mode=bicycling"
+		request = "&origin=" + quote(origin) + "&destination=" + quote(destination)
 
 	finalString = base + urlTarget + key + request + end
 	print finalString
