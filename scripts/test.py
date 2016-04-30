@@ -13,7 +13,7 @@ print("""
 										  frameborder="0" style="border:0"
 										  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
 										    &origin=8+first+court+preston,3072
-										    &destination=NGV
+										    &destination=Ivanhoe
 										    &waypoints=Museum+of+Melbourne
 										    &mode=bicycling" allowfullscreen>
 										</iframe>
