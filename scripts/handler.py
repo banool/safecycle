@@ -20,23 +20,32 @@ def entryPoint():
 
     gmaps = googlemaps.Client(apiKey)
 
-    origin = form["origin"].value
-    destination = form["destination"].value
+    #origin = form["origin"].value
+    #destination = form["destination"].value
+    origin = "ANU,Canberra,Australia"
+    destination = "Parliament House,Canberra,Australia"
 
     originCoords = getCoords(origin, gmaps)
     destinationCoords = getCoords(destination, gmaps)
+    #print(originCoords)
+    #print(destinationCoords)
 
     testPoints = pathFinder(originCoords, destinationCoords)
 
     probs = []
     for point in testPoints:
-    	probs.append(float(getAzureProbability(point[0], point[1])))
+    	probs.append((point, float(getAzureProbability(point[0], point[1]))))
+    	#probs.append(float(getAzureProbability(point[0], point[1])))
 
     # Get 8 lowest waypoints.
-    waypoints = sorted(probs)[:8]
-    print(waypoints)
+    waypoints = sorted(probs, key=lambda x: x[1])[:8]
+    
+    stringWaypoints = []
+    for i in waypoints:
+    	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
 
-    #compileMapsRequest(origin, destination, waypoints)
+    #print(stringWaypoints)
+    compileMapsRequest(origin, destination, stringWaypoints)
 
     """
     #lats = np.arange(-35.21, -35.27, 0.01)
@@ -55,13 +64,12 @@ def entryPoint():
     #diag
     #print(form)
 
-
 def pathFinder(A,B):
     # A[] and B[] are long and lat coordinates
     if len(A)!=2 or len(B)!=2:
         return -1
 
-    buf = 0.5
+    buf = 0.01
     xmin = min(A[0],B[0]) - buf
     ymin = min(A[1],B[1]) - buf
     xmax = max(A[0],B[0]) + buf
@@ -78,12 +86,12 @@ def pathFinder(A,B):
     i = 0
     x = xmin
     while x<xmax:
-        C.append([x,c+m*x+c])
-        C.append([x,c+m*x+(c+buf)])
-        C.append([x,c+m*x+(c-buf)])
+        C.append([x,m*x+(c-buf)])
+        C.append([x,m*x+c])
+        C.append([x,m*x+(c+buf)])
         x+=step
-
     return C
+
 
 def getCoords(address, gmaps):
 	
