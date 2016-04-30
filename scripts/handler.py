@@ -42,10 +42,10 @@ def entryPoint():
     stringWaypoints = []
     for i in waypoints:
     	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
-
+    print(stringWaypoints)
     #print(stringWaypoints)
     compileMapsRequest(origin, destination, stringWaypoints)
-
+	print(stringWaypoints)
     """
     #lats = np.arange(-35.21, -35.27, 0.01)
     #longs = np.arange(149.114, 149.17, 0.01)
