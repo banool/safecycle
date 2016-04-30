@@ -152,7 +152,7 @@ def compileMapsRequest(origin, destination, waypoints):
 		requestParts.append(quote(origin))
 		requestParts.append("&destination=")
 		requestParts.append(quote(destination))
-		requestParts.append("&waypoints=optimize:true|")
+		requestParts.append("&waypoints=")
 		# Add waypoints
 		for wp in waypoints[:-1]:
 			requestParts.append(quote(wp))
