@@ -21,7 +21,8 @@ def entryPoint():
 
     compileMapsRequest(origin, destination, waypoints)
 
-    print(form)
+    #diag
+    #print(form)
 
 
 def compileMapsRequest(origin, destination, waypoints):
@@ -45,6 +46,24 @@ def compileMapsRequest(origin, destination, waypoints):
 
 	if len(waypoints) == 0:
 		request = "&origin=" + quote(origin) + "&destination=" + quote(destination)
+	else:
+		requestParts = []
+		# Build base request again.
+		requestParts.append("&origin=")
+		requestParts.append(quote(origin))
+		requestParts.append("&destination=")
+		requestParts.append(quote(destination))
+		requestParts.append("&waypoints=")
+		# Add waypoints
+		for wp in waypoints[:-1]:
+			requestParts.append(quote(wp))
+			requestParts.append("|")
+		# Add last one without the pipe.
+		requestParts.append(quote(wp))
+
+		request = "".join(requestParts)
+
+
 
 	finalString = base + urlTarget + key + request + end
 	print finalString
