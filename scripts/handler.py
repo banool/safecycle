@@ -81,7 +81,7 @@ def compileMapsRequest(origin, destination, waypoints):
 			requestParts.append(quote(wp))
 			requestParts.append("|")
 		# Add last one without the pipe.
-		requestParts.append(quote(wp))
+		requestParts.append(quote(waypoints[-1]))
 
 		request = "".join(requestParts)
 
