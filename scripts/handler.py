@@ -42,7 +42,7 @@ def entryPoint():
 
     # Get 8 lowest waypoints.
     waypoints = []
-    stringWaypoints = sorted(probs[i:i+3], key=lambda x: x[1])[:numWaypoints]
+    stringWaypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
 
     """
     for i in range(0, len(probs)/3):
