@@ -51,7 +51,7 @@ def entryPoint():
 
 def getCoords(address, gmaps):
 	
-	return gmaps.geocode(address)
+	return gmaps.geocode(address, {"country":"AU"})
 
 
 def compileMapsRequest(origin, destination, waypoints):
