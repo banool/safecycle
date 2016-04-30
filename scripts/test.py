@@ -8,7 +8,7 @@ print("Content-Type: text/html\n")
 print("""
 									<div class="row">
 										<iframe
-										  width="100%"
+										  width="1215"
 										  height="750"
 										  frameborder="0" style="border:0"
 										  src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
