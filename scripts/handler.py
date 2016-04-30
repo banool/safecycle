@@ -3,7 +3,7 @@
 import urllib2
 import json 
 from urllib import quote
-import numpy as np
+#import numpy as np
 
 import cgitb, cgi
 cgitb.enable()
@@ -25,8 +25,17 @@ def entryPoint():
 
     #compileMapsRequest(origin, destination, waypoints)
 
-    lats = np.arange(-35.21, -35.27, 0.01)
-    longs = np.arange(149.114, 149.17, 0.01)
+    #lats = np.arange(-35.21, -35.27, 0.01)
+    #longs = np.arange(149.114, 149.17, 0.01)
+
+    latitude = -35.21
+    longitude = 149.114
+
+    for i in xrange(0,7):
+    	for j in xrange(0,7):
+    		getAzureData(latitude, longitude)
+    		latitude += 0.01
+    	longitude += 0.01
 
     for i in lats:
     	for j in longs:
