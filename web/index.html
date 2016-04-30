@@ -16,37 +16,9 @@
 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/x-icon">
-
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-		
+
 		<script>
-
-		function getMap()
-		{
-		   $.ajax({
-
-		     type: "GET",
-		     url: '/handler',
-		     success: function(data) {
-		           // data is ur summary
-		          $('#replaceTarget').html(data);
-		     }
-
-		   });
-
-		}
-		</script>
-		<!--<script>
-		$(document).ready(function(){
-		    $("submitLocations").click(function(){
-		        $.get("/handler" {
-		            alert("Data: " + data + "\nStatus: " + status);
-		        });
-		    });
-		});
-		</script>-->
-
-		<!--<script>
 		/* This script here enables the ajax response. Whatever is returned will
 		appear at the id tag specified after target. */
 		// prepare the form when the DOM is ready
@@ -66,7 +38,7 @@
 			    }
 			});
 		});
-		</script>-->
+		</script>
 	</head>
 
 	<body class="homepage">
@@ -134,7 +106,7 @@
 								<header>
 									<h2>Get there safe</h2>
 								</header>
-									<form method="post" id="submitLocations">
+									<form method="post" id="submitLocations" action="/handler">
 									<div class="row 50%">
 										<div class="6u 12u(mobile)">
 											<input name="origin" placeholder="Origin" type="text" class="text" />
@@ -145,7 +117,7 @@
 									</div>
 									<div class="row 50%">
 										<div class="12u">
-											<input class="button" type="submit" value="Navigate" onclick="getMap()">
+											<input class="button" type="submit" value="Navigate">
 										</div>
 									</div>
 									</form>
