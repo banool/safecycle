@@ -29,7 +29,7 @@ def entryPoint():
     longs = np.arange(149.114, 149.17, 0.01)
 
     for i in lats:
-    	for j i longs:
+    	for j in longs:
     		getAzureData(i, j)
 
     
