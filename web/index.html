@@ -16,7 +16,9 @@
 
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/x-icon">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+		<script src="assets/jquery.js"></script>
+    	<script src="assets/jquery.form.js"></script>
 
 		<script>
 		/* This script here enables the ajax response. Whatever is returned will
@@ -39,6 +41,7 @@
 			});
 		});
 		</script>
+
 	</head>
 
 	<body class="homepage">
@@ -106,7 +109,7 @@
 								<header>
 									<h2>Get there safe</h2>
 								</header>
-									<form method="post" id="submitLocations" action="/handler">
+								<form method="post" id="submimtLocations" action="/handler">
 									<div class="row 50%">
 										<div class="6u 12u(mobile)">
 											<input name="origin" placeholder="Origin" type="text" class="text" />
@@ -120,18 +123,19 @@
 											<input class="button" type="submit" value="Navigate">
 										</div>
 									</div>
-									</form>
+								</form>
 
-									<!-- Google Maps part -->
-									<div class="row" id="replaceTarget">
-										<iframe
-										  width="100%"
-										  height="750"
-										  frameborder="0" style="border:0"
-										  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
-										    &q=University+of+Melbourne" allowfullscreen>
-										</iframe>
-									</div>
+								<!-- Google Maps part -->
+								<div class="row" id="replaceTarget">
+									<iframe
+									  width="100%"
+									  height="750"
+									  frameborder="0" style="border:0"
+									  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo
+									    &q=University+of+Melbourne" allowfullscreen>
+									</iframe>
+								</div>
+								
 							</section>
 
 					</div>
