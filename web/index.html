@@ -17,30 +17,27 @@
 		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 		<link rel="icon" href="favicon.ico" type="image/x-icon">
 
-		<script src="assets/jquery.form.js"></script>
-		<script src="assets/jquery.js"></script>
+	    <script src="assets/jquery.js"></script>
+	    <script src="assets/jquery.form.js"></script>
 
-		<script>
-		/* This script here enables the ajax response. Whatever is returned will
-		appear at the id tag specified after target. */
-		// prepare the form when the DOM is ready
-		$(document).ready(function() {
-			// bind form using ajaxForm
-			$('#submitLocations').ajaxForm({
-			    // target identifies the element(s) to update with the server response
-			    target: '#replaceTarget',
+	    <script>
+	    /* This script here enables the ajax response. Whatever is returned will
+	     appear at the id tag specified after target. */
+	    // prepare the form when the DOM is ready
+	    $(document).ready(function() {
+	      // bind form using ajaxForm
+	      $('#entryForm').ajaxForm({
+	          // target identifies the element(s) to update with the server response
+	          target: '#results',
 
-			    // success identifies the function to invoke when the server response
-			    // has been received; here we apply a fade-in effect to the new content
-			    success: function() {
-			        $('#replaceTarget').fadeIn('slow');
-			        //$('#entryForm').each(function() {
-			            //this.reset();
-			        //});
-			    }
-			});
-		});
-		</script>
+	          // success identifies the function to invoke when the server response
+	          // has been received; here we apply a fade-in effect to the new content
+	          success: function() {
+	              $('#results').fadeIn('slow');
+	          }
+	      });
+	    });
+	    </script>
 
 	</head>
 
@@ -124,6 +121,25 @@
 										</div>
 									</div>
 								</form>
+								
+								<form id="entryForm" action="/handler" method="post">
+									<div class="row 50%">
+										<div class="6u 12u(mobile)">
+											<input name="origin" placeholder="Origin" type="text" class="text" />
+										</div>
+										<div class="6u 12u(mobile)">
+											<input name="destination" placeholder="Destination" type="text" class="text" />
+										</div>
+									</div>
+									<div class="row 50%">
+										<div class="12u">
+											<input class="button" type="submit" value="Navigate">
+										</div>
+									</div>
+				                </form>
+				            </div>
+				            </br>
+				            <div id="results"></div>
 
 								<!-- Google Maps part -->
 								<div class="row" id="replaceTarget">
