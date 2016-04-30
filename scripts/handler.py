@@ -11,7 +11,7 @@ cgitb.enable()
 print("Content-Type: text/html\n")
 
 apiKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
-numWaypoints = 4
+numWaypoints = 8
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
@@ -42,16 +42,19 @@ def entryPoint():
 
     # Get 8 lowest waypoints.
     waypoints = []
+    stringWaypoints = sorted(probs[i:i+3], key=lambda x: x[1])[:numWaypoints]
 
+    """
     for i in range(0, len(probs)/3):
     	minimum = sorted(probs[i:i+3], key=lambda x: x[1])[0]
     	waypoints.append(minimum)
+    """
 
     #waypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
     
-    stringWaypoints = []
-    for i in waypoints:
-    	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
+    #stringWaypoints = []
+    #for i in waypoints:
+    #	stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
 
     #print(stringWaypoints)
     compileMapsRequest(origin, destination, stringWaypoints)
@@ -79,7 +82,7 @@ def pathFinder(A,B):
     if len(A)!=2 or len(B)!=2:
         return -1
 
-    buf = 0.00005
+    buf = 0.01
     xmin = min(A[0],B[0]) - buf
     ymin = min(A[1],B[1]) - buf
     xmax = max(A[0],B[0]) + buf
@@ -93,12 +96,14 @@ def pathFinder(A,B):
     # y = lower + m * x
 
     C = []
-    i = 0
     x = xmin
     while x<xmax:
-        C.append([x,m*x+(c-buf)])
-        C.append([x,m*x+c])
-        C.append([x,m*x+(c+buf)])
+        if x>xmin+2*step and x<xmax-2*step:
+            C.append([x,m*x+(c-buf)])
+            C.append([x,m*x+c])
+            C.append([x,m*x+(c+buf)])
+        else:
+            C.append([x,m*x+c])
         x+=step
     return C
 
