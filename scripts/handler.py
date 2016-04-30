@@ -11,6 +11,7 @@ cgitb.enable()
 print("Content-Type: text/html\n")
 
 apiKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
+numWaypoints = 4
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
@@ -36,7 +37,7 @@ def entryPoint():
     	#probs.append(float(getAzureProbability(point[0], point[1])))
 
     # Get 8 lowest waypoints.
-    waypoints = sorted(probs, key=lambda x: x[1])[:8]
+    waypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
     
     stringWaypoints = []
     for i in waypoints:
@@ -67,7 +68,7 @@ def pathFinder(A,B):
     if len(A)!=2 or len(B)!=2:
         return -1
 
-    buf = 0.00001
+    buf = 0.00005
     xmin = min(A[0],B[0]) - buf
     ymin = min(A[1],B[1]) - buf
     xmax = max(A[0],B[0]) + buf
