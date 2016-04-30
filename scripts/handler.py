@@ -12,7 +12,6 @@ print("Content-Type: text/html\n")
 
 apiKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
 
-
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
 def entryPoint():
@@ -22,36 +21,79 @@ def entryPoint():
     gmaps = googlemaps.Client(apiKey)
 
     origin = form["origin"].value
-    print (getCoords(origin, gmaps))
     destination = form["destination"].value
-    waypoints = ["-35.308022,149.124349"]
 
-    compileMapsRequest(origin, destination, waypoints)
+    originCoords = getCoords(origin, gmaps)
+    destinationCoords = getCoords(destination, gmaps)
 
+    testPoints = pathFinder(originCoords, destinationCoords)
+
+    probs = []
+    for point in testPoints:
+    	probs.append(float(getAzureProbability(point[0], point[1])))
+
+    # Get 8 lowest waypoints.
+    waypoints = sorted(probs)[:8]
+    print(waypoints)
+
+    #compileMapsRequest(origin, destination, waypoints)
+
+    """
     #lats = np.arange(-35.21, -35.27, 0.01)
     #longs = np.arange(149.114, 149.17, 0.01)
-    """
+    
     latitude = -35.21
     longitude = 149.114
 
     for i in xrange(0,7):
     	for j in xrange(0,7):
-    		getAzureData(latitude, longitude)
+    		print(getAzureProbability(latitude, longitude)
     		latitude += 0.01
     	longitude += 0.01
-
-    for i in lats:
-    	for j in longs:
-    		print(getAzureData(i, j))
     """
-    
 
     #diag
     #print(form)
 
+
+def pathFinder(A,B):
+    # A[] and B[] are long and lat coordinates
+    if len(A)!=2 or len(B)!=2:
+        return -1
+
+    buf = 0.5
+    xmin = min(A[0],B[0]) - buf
+    ymin = min(A[1],B[1]) - buf
+    xmax = max(A[0],B[0]) + buf
+    ymax = max(A[1],B[1]) + buf
+    step = (xmax-xmin)/8
+
+    m = (float)(A[1]-B[1])/(float)(A[0]-B[0])
+    c = A[1] - m*A[0]
+
+    # y = upper + m * x
+    # y = lower + m * x
+
+    C = []
+    i = 0
+    x = xmin
+    while x<xmax:
+        C.append([x,c+m*x+c])
+        C.append([x,c+m*x+(c+buf)])
+        C.append([x,c+m*x+(c-buf)])
+        x+=step
+
+    return C
+
 def getCoords(address, gmaps):
 	
-	return gmaps.geocode(address, {"country":"AU"})
+	ret = gmaps.geocode(address, {"country":"au"})
+	if len(ret) == 0:
+		print "Couldn't geolocate " + address
+		return None
+	else:
+		coords = ret[0]["geometry"]["location"]
+		return [coords["lat"], coords["lng"]]
 
 
 def compileMapsRequest(origin, destination, waypoints):
@@ -98,8 +140,7 @@ def compileMapsRequest(origin, destination, waypoints):
 	print finalString
 
 
-def getAzureData(latitude, longitude):
-
+def getAzureProbability(latitude, longitude):
 
 	data =  {
 
@@ -108,7 +149,7 @@ def getAzureData(latitude, longitude):
 	                "input1":
 	                {
 	                    "ColumnNames": ["long", "lat", "time", "event"],
-	                    "Values": [ [ latitude, longitude, "9", "0" ], [ "0", "0", "0", "0" ], ]
+	                    "Values": [ [ longitude, latitude, "9", "0" ], [ "0", "0", "0", "0" ], ]
 	                },        },
 	            "GlobalParameters": {
 	}
@@ -130,7 +171,7 @@ def getAzureData(latitude, longitude):
 	    # response = urllib.request.urlopen(req)
 
 	    result = response.read()
-	    print("Long: %s Lat: %s Prob: %s" % (str(longitude), str(latitude), json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1]))
+	    return (json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1])
 	except urllib2.HTTPError, error:
 	    print("The request failed with status code: " + str(error.code))
 
