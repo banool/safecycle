@@ -177,7 +177,7 @@ def getAzureProbability(latitude, longitude):
 	                "input1":
 	                {
 	                    "ColumnNames": ["long", "lat", "time", "event"],
-	                    "Values": [ [ longitude, latitude, "9", "0" ], [ "0", "0", "0", "0" ], ]
+	                    "Values": [ [ longitude, latitude, "12", "0" ], [ "0", "0", "0", "0" ], ]
 	                },        },
 	            "GlobalParameters": {
 	}
