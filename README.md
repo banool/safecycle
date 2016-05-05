@@ -19,7 +19,7 @@ Currently only requests for Canberra can be processed properly as we haven't loa
 ## Technical implementation details
 This diagram loosely explains what happens when a user submits a request for a route map.
 
-![Tech implementation flowchart](https://www.dropbox.com/s/enlhio7lhh5msob/2016-05-05%2009.47.01.jpg?dl=0)
+![Tech implementation flowchart](https://dl.dropboxusercontent.com/s/enlhio7lhh5msob/2016-05-05%2009.47.01.jpg?dl=0)
 
 ### Steps followed in a single transaction
 
@@ -29,17 +29,18 @@ This diagram loosely explains what happens when a user submits a request for a r
 4. We iterate through this list, using the Azure ML HTML API to get risk probabilities for each point.
 5. We sort this list of probabilities and choose the waypoints with this lowest risk.
 6. Using the original origin and destination, with the waypoints we have selected, a new link for a Google Maps embed map is created and printed via CGI.
-7. This new map is reloaded asynchronously using jQuery ajax into the webpage.
+7. This new map is reloaded asynchronously into the webpage using jQuery AJAX.
 
 ### Generating a risk probability for a point with Azure ML
-[Azure ML workflow](https://www.dropbox.com/s/6pucmwj12rvdpkc/2016-05-05%2009.59.36.jpg?dl=0)
+![Azure ML workflow](https://dl.dropboxusercontent.com/s/6pucmwj12rvdpkc/2016-05-05%2009.59.36.jpg?dl=0)
 - The dataflow in Azure ML
 
 
 
-
 ## Viability and growth
-The app has room to scale in multiple different ways. Geographical scalability is the first thing that comes to mind. Google Maps already has the ability to geolocate and create maps for most major places across the world, so we would just need to add crash data for these locations worldwide
+This app has room to scale in multiple different ways. Geographical scalability is the first thing that comes to mind. Google Maps already has the ability to geolocate and create maps for most major places across the world, so we would just need to add crash data for these locations worldwide. The accuracy and reliability of these maps can be improved further by incorporating more data into the calculations, such as weather of traffic data. The room for growth here is enormous as data availability is increasing day by day. 
+
+Demand for this app could extend beyond just end user cyclists. Food delivery companies with a fleet of cyclists, for example Deliveroo, could find great value in an app that ensures their cyclists' safety. The app could also obviously be reintegrated into Google Maps itself, since currently all they have for cyclists is the ability to avoid ferries, not danger hotspots.
 
 ## More information
 Feel free to contact [me](https://github.com/banool) or any of the contributors about the project :)
