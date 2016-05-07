@@ -35,7 +35,7 @@ This diagram loosely explains what happens when a user submits a request for a r
 ![Azure ML workflow](https://dl.dropboxusercontent.com/s/6pucmwj12rvdpkc/2016-05-05%2009.59.36.jpg?dl=0)
 - The dataflow in Azure ML
 
-
+Using historical data containing reported incidents and their locations, in Azure ML we construct a predictive model, known as a logistic regression model. The input to the model is longitude, latitude and time of day. Output is the probability of an incident.
 
 ## Viability and growth
 This app has room to scale in multiple different ways. Geographical scalability is the first thing that comes to mind. Google Maps already has the ability to geolocate and create maps for most major places across the world, so we would just need to add crash data for these locations worldwide. The accuracy and reliability of these maps can be improved further by incorporating more data into the calculations, such as weather of traffic data. The room for growth here is enormous as data availability is increasing day by day. 
