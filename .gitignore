@@ -1,3 +1,5 @@
 eventPics
 other/azureNotes.md
 other/px-polaris
+venv
+*.pyc
