@@ -1,14 +1,12 @@
-#!/usr/bin/python
-
 import googlemaps
 import json
 import random
-import urllib2
 
 from os import environ
-from urllib import quote
-
 from pathfinder import pathFinder
+from urllib.error import HTTPError
+from urllib.parse import quote
+from urllib.request import (urlopen, Request)
 
 import cgitb, cgi
 cgitb.enable()
@@ -20,7 +18,7 @@ googleKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
 azureKey = "gkYlkVyl1Z2eA0IZWe/Qr4I/JDT0RsKCHl3ggAaeRKQqQ6ehY4EXgD0yze9NYdOopXPIzKH9bB2h8e5PopOQFA=="
 numWaypoints = 2
 
-NO_AZURE = True
+USE_AZURE = False
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
@@ -73,7 +71,7 @@ def entryPoint():
 def getCoords(address, gmaps):
     ret = gmaps.geocode(address, {"country":"au"})
     if len(ret) == 0:
-        print "Couldn't geolocate " + address
+        print("Couldn't geolocate " + address)
         return None
     else:
         coords = ret[0]["geometry"]["location"]
@@ -124,7 +122,7 @@ def compileMapsRequest(origin, destination, waypoints):
 
     # Compile the final request and print it (via CGI).
     finalString = base + urlTarget + key + request + end
-    print finalString
+    print(finalString)
 
 
 """
@@ -162,22 +160,17 @@ def getProbabilityAzure(latitude, longitude):
     api_key = azureKey
     headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
-    req = urllib2.Request(url, body, headers)
+    req = Request(url, body, headers)
 
     try:
-        response = urllib2.urlopen(req)
-
-        # If you are using Python 3+, replace urllib2 with urllib.request in the above code:
-        # req = urllib.request.Request(url, body, headers)
-        # response = urllib.request.urlopen(req)
-
+        response = urlopen(req)
         result = response.read()
         return float(json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1])
-    except urllib2.HTTPError, error:
-        print("The request failed with status code: " + str(error.code))
+    except HTTPError as e:
+        print("The request failed with status code: " + str(e.code))
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-        print(error.info())
-        print(json.loads(error.read()))
+        print(e.info())
+        print(json.loads(e.read()))
 
         return None
 
