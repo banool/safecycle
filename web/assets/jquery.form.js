@@ -3,7 +3,7 @@
  * version: 3.51.0-2014.06.20
  * Requires jQuery v1.5 or later
  * Copyright (c) 2014 M. Alsup
- * Examples and documentation at: http://malsup.com/jquery/form/
+ * Examples and documentation at: https://malsup.com/jquery/form/
  * Project repository: https://github.com/malsup/form
  * Dual licensed under the MIT and GPL licenses.
  * https://github.com/malsup/form#copyright-and-license
@@ -93,7 +93,7 @@ $.fn.attr2 = function() {
 $.fn.ajaxSubmit = function(options) {
     /*jshint scripturl:true */
 
-    // fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
+    // fast fail if nothing selected (https://dev.jquery.com/ticket/2752)
     if (!this.length) {
         log('ajaxSubmit: skipping submit process - no element selected');
         return this;
@@ -240,7 +240,7 @@ $.fn.ajaxSubmit = function(options) {
     // 06-NOV-09: now defaulting to iframe mode if file input is detected
     if (options.iframe !== false && (options.iframe || shouldUseFrame)) {
         // hack to fix Safari hang (thanks to Tim Molendijk for this)
-        // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
+        // see:  https://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
         if (options.closeKeepAlive) {
             $.get(options.closeKeepAlive, function() {
                 jqxhr = fileUploadIframe(a);
@@ -467,7 +467,7 @@ $.fn.ajaxSubmit = function(options) {
              * carry the protocol property in ie8, when running under ssl
              * frame.document is the only valid response document, since
              * the protocol is know but not on the other two objects. strange?
-             * "Same origin policy" http://en.wikipedia.org/wiki/Same_origin_policy
+             * "Same origin policy" https://en.wikipedia.org/wiki/Same_origin_policy
              */
 
             var doc = null;
@@ -862,7 +862,7 @@ $.fn.ajaxForm = function(options) {
             });
             return this;
         }
-        // is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+        // is your DOM ready?  https://docs.jquery.com/Tutorials:Introducing_$(document).ready()
         log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
         return this;
     }
@@ -1092,7 +1092,7 @@ $.fn.fieldSerialize = function(successful) {
  *  v == ['C1']
  *
  * The successful argument controls whether or not the field element must be 'successful'
- * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
+ * (per https://www.w3.org/TR/html4/interact/forms.html#successful-controls).
  * The default value of the successful argument is true.  If this value is false the value(s)
  * for each element is returned.
  *
