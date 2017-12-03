@@ -7,11 +7,15 @@ NumPy, SciPy, sklearn, pandas
 
 from pathfinder import pathFinder
 
-import urllib2
-import json
 import googlemaps
-from urllib import quote
+import json
+import random
+
 from os import environ
+from pathfinder import pathFinder
+from urllib.error import HTTPError
+from urllib.parse import quote
+from urllib.request import (urlopen, Request)
 
 import cgitb, cgi
 cgitb.enable()
@@ -37,7 +41,6 @@ logit.fit(df[['long','lat','time']],df['event'])
 def getLogitProbability(latitude, longitude, time):
     result = logit.predict_proba([[longitude,latitude,time]])[0][1]
     return result
-
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
@@ -66,23 +69,21 @@ def entryPoint():
     # a tuple with the point coords and its risk probability.
     probs = []
     for point in testPoints:
-    	latitude = point[0]
-    	longitude = point[1]
-
+        latitude = point[0]
+    	  longitude = point[1]
         res = getLogitProbability(latitude, longitude, time=12)
-
         probs.append((point, res))
 
     # Get 2 (numWayPoints) lowest waypoints.
     waypoints = sorted(probs, key=lambda x: x[1])[:numWaypoints]
-    
+
     # Convert these waypoints to strings for compiling the http request to the
     # Google Maps embed API.
     stringWaypoints = []
     for i in waypoints:
         stringWaypoints.append(str(i[0][0]) + "," + str(i[0][1]))
 
-    # Build the final Google Maps iframe HTML to 
+    # Build the final Google Maps iframe HTML to
     # insert into the webpage with AJAX jQuery.
     compileMapsRequest(origin, destination, stringWaypoints)
 
@@ -91,7 +92,7 @@ def entryPoint():
 def getCoords(address, gmaps):
     ret = gmaps.geocode(address, {"country":"au"})
     if len(ret) == 0:
-        print "Couldn't geolocate " + address
+        print("Couldn't geolocate " + address)
         return None
     else:
         coords = ret[0]["geometry"]["location"]
@@ -99,7 +100,7 @@ def getCoords(address, gmaps):
 
 
 # Using hardcoded HTML build up the google maps iframe to be returned.
-# The quote function makes a string HTML safe. 
+# The quote function makes a string HTML safe.
 def compileMapsRequest(origin, destination, waypoints):
     base = """
                 <div class="row">
@@ -118,7 +119,7 @@ def compileMapsRequest(origin, destination, waypoints):
                     </iframe>
                 </div>
             """
-            
+
     # Create the request as a list of components.
     requestParts = []
     # Build the base request.
@@ -142,7 +143,7 @@ def compileMapsRequest(origin, destination, waypoints):
 
     # Compile the final request and print it (via CGI).
     finalString = base + urlTarget + key + request + end
-    print finalString
+    print(finalString)
 
 
 """
@@ -152,12 +153,12 @@ just following the (very useful) API that it generates for us.
 
 The request comes back as json and we unpack the final proability with the quite
 convoluted index dereferencing of ["Results"]["output1"]["value"]["Values"][0][-1].
-There is likely a more elegant method of pulling off this task, but as it is it 
-still works quite solidly. 
+There is likely a more elegant method of pulling off this task, but as it is it
+still works quite solidly.
 
 We return the final probability as a float.
 """
-def getAzureProbability(latitude, longitude):
+def getProbabilityAzure(latitude, longitude):
 
     baseHour = 12
 
@@ -180,25 +181,30 @@ def getAzureProbability(latitude, longitude):
     api_key = azureKey
     headers = {'Content-Type':'application/json', 'Authorization':('Bearer '+ api_key)}
 
-    req = urllib2.Request(url, body, headers) 
+    req = Request(url, body, headers)
 
     try:
-        response = urllib2.urlopen(req)
-
-        # If you are using Python 3+, replace urllib2 with urllib.request in the above code:
-        # req = urllib.request.Request(url, body, headers) 
-        # response = urllib.request.urlopen(req)
-
+        response = urlopen(req)
         result = response.read()
         return float(json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1])
-    except urllib2.HTTPError, error:
-        print("The request failed with status code: " + str(error.code))
+    except HTTPError as e:
+        print("The request failed with status code: " + str(e.code))
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-        print(error.info())
-        print(json.loads(error.read()))
+        print(e.info())
+        print(json.loads(e.read()))
 
-        return None                 
+        return None
 
+# Trying to host this in the far future, the azure access is long gone.
+# As such, it would be nice to have a function that does the work that azure
+# did locally. Currently this function is selected if USE_AZURE is True.
+def getProbabilityLocal(latitude, longitude):
+    '''
+    I don't have access to the Azure service for this any more, and I don't
+    remember the algorithm used for generating the probabilities that it
+    produced since I didn't write that bit. As such, this function just
+    generates a random floating point number from 0.0 to 1.0.
+    '''
+    return random.uniform(0, 1)
 
 entryPoint()
-

@@ -1,7 +1,7 @@
 # Safe Cycle
 Safe Cycle is the 1st place winning project our team created in less than 24 hours for the 2016 Melbourne Data Science Challenge, sponsored by Microsoft and Azure ML.
 
-Take a look at the project here: http://safecycle.xyz/
+Take a look at the project here: https://safecycle.xyz/
 
 ## Update
 Welcome to the localML branch. This branch uses a machine learner located on the server instead of AzureML. This has resulted in a significant speed up in response time as the script isn't waiting for Azure ML to computer probabilities for each potential point and send them back. As such a query now takes about 1-2 second instead of 30!
@@ -17,7 +17,7 @@ Currently only requests for Canberra can be processed properly as we haven't loa
 ### Directory structure
 - **web** Contains the all the HTML for the front end, including relevant CSS and Javascript. No images were used, but they would be here too.
 - **scripts** Contains the Python scripts that communicate with Azure ML and create the Google Maps request.
-- **other** Contains the original template used for the front end (thanks to [Pixelarity!](http://pixelarity.com/)) as well as other unused / old working files.
+- **other** Contains the original template used for the front end (thanks to [Pixelarity!](https://pixelarity.com/)) as well as other unused / old working files.
 
 ## Technical implementation details
 This diagram loosely explains what happens when a user submits a request for a route map.
