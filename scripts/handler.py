@@ -1,3 +1,12 @@
+#!../venv/bin/python
+
+"""
+For this new local ML to work you will need the following packages installed:
+NumPy, SciPy, sklearn, pandas
+"""
+
+from pathfinder import pathFinder
+
 import googlemaps
 import json
 import random
@@ -11,6 +20,9 @@ from urllib.request import (urlopen, Request)
 import cgitb, cgi
 cgitb.enable()
 
+from sklearn import linear_model
+import pandas as pd
+
 print("Content-Type: text/html\n")
 
 # If you're looking at this project, please don't steal/abuse this API key.
@@ -18,7 +30,17 @@ googleKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
 azureKey = "gkYlkVyl1Z2eA0IZWe/Qr4I/JDT0RsKCHl3ggAaeRKQqQ6ehY4EXgD0yze9NYdOopXPIzKH9bB2h8e5PopOQFA=="
 numWaypoints = 2
 
-USE_AZURE = False
+## read voxels data, has to be in local directory - bk
+df = pd.read_csv('voxels.csv')
+
+## build logistic regression model - bk
+logit = linear_model.LogisticRegression()
+logit.fit(df[['long','lat','time']],df['event'])
+
+## probability of accident given a lat, long and time of day
+def getLogitProbability(latitude, longitude, time):
+    result = logit.predict_proba([[longitude,latitude,time]])[0][1]
+    return result
 
 # We don't check that the fields weren't blank. That kind of data integrity
 # assurance can get thrown out the window in a 24 hour hackathon.
@@ -47,10 +69,9 @@ def entryPoint():
     # a tuple with the point coords and its risk probability.
     probs = []
     for point in testPoints:
-        if USE_AZURE:
-            res = getProbabilityAzure(point[0], point[1])
-        else:
-            res = getProbabilityLocal(point[0], point[1])
+        latitude = point[0]
+    	  longitude = point[1]
+        res = getLogitProbability(latitude, longitude, time=12)
         probs.append((point, res))
 
     # Get 2 (numWayPoints) lowest waypoints.

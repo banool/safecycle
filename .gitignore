@@ -1,5 +1,9 @@
 # My stuff
 myvenv/
+eventPics
+other/azureNotes.md
+other/px-polaris
+*.pyc
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -105,4 +109,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-

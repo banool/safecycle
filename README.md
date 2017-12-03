@@ -3,6 +3,9 @@ Safe Cycle is the 1st place winning project our team created in less than 24 hou
 
 Take a look at the project here: https://safecycle.xyz/
 
+## Update
+Welcome to the localML branch. This branch uses a machine learner located on the server instead of AzureML. This has resulted in a significant speed up in response time as the script isn't waiting for Azure ML to computer probabilities for each potential point and send them back. As such a query now takes about 1-2 second instead of 30!
+
 ## Overview
 Safe Cycle is a web app that tries to create safer routes for cyclists. The approach we took uses Azure ML, Google Maps and some Python scripts with an HTML jQuery driven front end. Data related to past crashes and the time of day is used to try and avoid danger hot spots on a cyclist's journey, with room for additional data such as weather and traffic to be taken into account. The project was inspired by a cycling injury I had sustained where I fell off my bike and broke my collarbone (for which I was getting surgery the next morning), [check it out!](https://www.dropbox.com/sh/4ojal2l0ha7kf3r/AAC_VnPk-99WFY5O_PDhui3Da?dl=0)
 
