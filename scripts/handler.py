@@ -1,4 +1,4 @@
-#!../venv/bin/python
+#!/var/www/safecycle/myvenv/bin/python3.6
 
 """
 For this new local ML to work you will need the following packages installed:
@@ -52,7 +52,8 @@ def entryPoint():
 
     # This captures if the script is run from the webpage.
     # If not, we just hard code some values for testing purposes.
-    if 'GATEWAY_INTERFACE' in environ:
+    valuesValid = 'origin' in form and 'destination' in form
+    if 'GATEWAY_INTERFACE' in environ and valuesValid:
         origin = form["origin"].value
         destination = form["destination"].value
     else:
@@ -70,7 +71,7 @@ def entryPoint():
     probs = []
     for point in testPoints:
         latitude = point[0]
-    	  longitude = point[1]
+        longitude = point[1]
         res = getLogitProbability(latitude, longitude, time=12)
         probs.append((point, res))
 
