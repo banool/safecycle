@@ -8,11 +8,6 @@ from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.request import (urlopen, Request)
 
-import cgitb, cgi
-cgitb.enable()
-
-print("Content-Type: text/html\n")
-
 # If you're looking at this project, please don't steal/abuse this API key.
 googleKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
 azureKey = "gkYlkVyl1Z2eA0IZWe/Qr4I/JDT0RsKCHl3ggAaeRKQqQ6ehY4EXgD0yze9NYdOopXPIzKH9bB2h8e5PopOQFA=="
@@ -20,13 +15,15 @@ numWaypoints = 2
 
 USE_AZURE = False
 
-# We don't check that the fields weren't blank. That kind of data integrity
-# assurance can get thrown out the window in a 24 hour hackathon.
-def entryPoint():
 
-    form = cgi.FieldStorage()
+def entryPoint(form):
+    # We don't check that the fields weren't blank. That kind of data integrity
+    # assurance can get thrown out the window in a 24 hour hackathon.
 
     gmaps = googlemaps.Client(googleKey)
+
+    if not form:
+        return 'There was nothing in the POST request!'
 
     # This captures if the script is run from the webpage.
     # If not, we just hard code some values for testing purposes.
@@ -64,14 +61,14 @@ def entryPoint():
 
     # Build the final Google Maps iframe HTML to
     # insert into the webpage with AJAX jQuery.
-    compileMapsRequest(origin, destination, stringWaypoints)
+    return compileMapsRequest(origin, destination, stringWaypoints)
 
 
 # Get the coordinates of a given address.
 def getCoords(address, gmaps):
     ret = gmaps.geocode(address, {"country":"au"})
     if len(ret) == 0:
-        print("Couldn't geolocate " + address)
+        return "Couldn't geolocate " + address
         return None
     else:
         coords = ret[0]["geometry"]["location"]
@@ -122,7 +119,7 @@ def compileMapsRequest(origin, destination, waypoints):
 
     # Compile the final request and print it (via CGI).
     finalString = base + urlTarget + key + request + end
-    print(finalString)
+    return finalString
 
 
 """
@@ -167,12 +164,8 @@ def getProbabilityAzure(latitude, longitude):
         result = response.read()
         return float(json.loads(result)["Results"]["output1"]["value"]["Values"][0][-1])
     except HTTPError as e:
-        print("The request failed with status code: " + str(e.code))
+        return "The request failed with status code: " + str(e.code) + str(e.info()) + str(json.loads(e.read()))
         # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-        print(e.info())
-        print(json.loads(e.read()))
-
-        return None
 
 # Trying to host this in the far future, the azure access is long gone.
 # As such, it would be nice to have a function that does the work that azure
@@ -185,5 +178,3 @@ def getProbabilityLocal(latitude, longitude):
     generates a random floating point number from 0.0 to 1.0.
     '''
     return random.uniform(0, 1)
-
-entryPoint()
