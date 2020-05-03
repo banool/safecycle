@@ -9,11 +9,18 @@ from urllib.parse import quote
 from urllib.request import (urlopen, Request)
 
 # If you're looking at this project, please don't steal/abuse this API key.
-googleKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
+defaultGoogleKey = "AIzaSyADJzDYaO0we1opZUxxUULc8yFgD1W5nKo"
 azureKey = "gkYlkVyl1Z2eA0IZWe/Qr4I/JDT0RsKCHl3ggAaeRKQqQ6ehY4EXgD0yze9NYdOopXPIzKH9bB2h8e5PopOQFA=="
 numWaypoints = 2
 
 USE_AZURE = False
+
+googleKey = environ.get("GOOGLE_KEY", defaultGoogleKey)
+
+if googleKey != defaultGoogleKey:
+    print("Using google key from env")
+else:
+    print("Using default google key")
 
 
 def entryPoint(form):
